@@ -26,6 +26,10 @@ async function sendMessage(number, msg) {
     });
 }
 
+router.get("/", function(req, res){
+  res.json({status: "OK"})
+});
+
 router.post("/sms", async function(req, res, next) {
   console.log(util.inspect(req.body));
 
