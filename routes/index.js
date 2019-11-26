@@ -56,6 +56,8 @@ router.post("/sms", async function(req, res, next) {
     res.writeHead(200, { "Content-Type": "text/xml" });
     res.end(twiml.toString());
   }
+
+  res.status(200);
 });
 
 module.exports = router;
