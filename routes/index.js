@@ -31,8 +31,7 @@ router.post("/sms", async function(req, res, next) {
 
   const { From, Body } = req.body;
 
-  let user = await User.findOne({ phone: From });
-
+  // record message as entry
   await LogEntry.create({
     phone: From,
     text: Body,
@@ -40,6 +39,11 @@ router.post("/sms", async function(req, res, next) {
     twilio: req.body
   });
 
+
+  // existing user?
+  let user = await User.findOne({ phone: From });
+
+  // send welcome message to new users
   if (!user) {
     await User.create({ phone: From });
 
