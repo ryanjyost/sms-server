@@ -11,7 +11,7 @@
     "migrate:up": "db-migrate up",
     "migrate:down": "db-migrate down",
     "heroku:release": "npx db-migrate up",
-    "heroku:web": "npm install && npm run dev"
+    "heroku:web": "npm install && npm start"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
