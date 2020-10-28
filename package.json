@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
+    "deploy:prod": "",
     "dev": "nodemon ./bin/www",
     "ngrok": "twilio phone-numbers:update '+12094106857' --sms-url='http://localhost:1337/sms/reply'",
     "migrate:create": "db-migrate create",
     "migrate:up": "db-migrate up",
     "migrate:down": "db-migrate down",
-    "heroku:release": "npm install -g db-migrate-pg && db-migrate up",
+    "heroku:release": "npx db-migrate up",
     "heroku:web": "npm install && npm run dev"
   },
   "dependencies": {
