@@ -10,7 +10,7 @@
     "migrate:up": "db-migrate up",
     "migrate:down": "db-migrate down",
     "heroku:release": "npm install -g db-migrate-pg && db-migrate up",
-    "heroku:web": "npm install && npm start"
+    "heroku:web": "npm install && npm run dev"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
