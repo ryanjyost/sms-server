@@ -34,7 +34,6 @@ router.post("/verify", function(req, res) {
     .services(process.env.TwilioVerifySid)
     .verifications.create({ to: req.body.phone, channel: "sms" })
     .then(verification => {
-      console.log(verification.status);
       res.json({ status: "OK" });
     })
     .catch(e => res.json({ status: "error" }));
@@ -61,7 +60,7 @@ router.post("/sms/reply", async function(req, res) {
 
       console.log(`Adding new phone number: ${phone && phone.phone_number}`);
 
-      await sendMessage("First timer?");
+      await sendMessage("Welcome to My Private Lifelog", From);
 
       return res.status(200);
     } else {

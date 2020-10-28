@@ -5,10 +5,11 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "ngrok": "twilio phone-numbers:update '+14158493899' --sms-url='http://localhost:1337/sms'",
+    "ngrok": "twilio phone-numbers:update '+12094106857' --sms-url='http://localhost:1337/sms'",
     "migrate:create": "db-migrate create",
     "migrate:up": "db-migrate up",
-    "migrate:down": "db-migrate down"
+    "migrate:down": "db-migrate down",
+    "heroku": "npm run migrate:up && npm start"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
