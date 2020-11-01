@@ -38,6 +38,7 @@ async function smsReply(req, res) {
     res.status(200);
   } catch (e) {
     console.log({ e });
+    res.status(200);
   }
 }
 

@@ -6,6 +6,8 @@ ALTER TABLE users DROP COLUMN firebase_id;
 
 ALTER TABLE users DROP COLUMN email;
 
-DROP INDEX lower_case_log_text;
-
 ALTER TABLE users RENAME TO phone;
+
+ALTER INDEX user_pkey RENAME TO phone_pkey;
+
+
