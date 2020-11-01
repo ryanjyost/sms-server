@@ -11,6 +11,9 @@ router.post("/sms/reply", Handlers.twilio.smsReply);
 router.get("/logs", Handlers.logs.list);
 router.post("/logs", Handlers.logs.create);
 
+router.post("/users", Handlers.users.create);
+router.get("/users", Handlers.users.fetch);
+
 module.exports = router;
 
 // router.post("/verify", function(req, res) {

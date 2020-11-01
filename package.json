@@ -8,8 +8,8 @@
     "dev": "nodemon ./bin/www",
     "ngrok": "twilio phone-numbers:update '+12094106857' --sms-url='http://localhost:1337/sms/reply'",
     "migrate:create": "db-migrate create",
-    "migrate:up": "db-migrate up",
-    "migrate:down": "db-migrate down",
+    "migrate:up": "db-migrate up -c 1",
+    "migrate:down": "db-migrate down -c 1",
     "heroku:release": "npx db-migrate up",
     "heroku:web": "npm install && npm start"
   },

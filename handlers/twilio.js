@@ -11,29 +11,25 @@ async function smsReply(req, res) {
 
     console.log({ From, Body });
 
-    let phone = await db
-      .knex("phone")
+    let user = await db
+      .knex("users")
       .select("*")
-      .where({ phone_number: From })
+      .where({ phone: From })
       .first();
 
-    if (!phone) {
-      phone = await db
-        .knex("phone")
-        .returning(["id", "phone_number"])
-        .insert({ id: uuid(), phone_number: From });
-
-      console.log(`Adding new phone number: ${phone && phone.phone_number}`);
-
-      await sendMessage("Welcome to My Private Lifelog", From);
+    if (!user) {
+      await sendMessage(
+        `Hey 👋. Head over to [MyPrivateLifelog dot com] to start your own lifelog. Once set up, you'll be able to add entries by texting this number.`,
+        From
+      );
 
       return res.status(200);
     }
 
     let log = await db
       .knex("logs")
-      .returning(["id", "phone_id", "text", "created"])
-      .insert({ id: uuid(), text: Body, phone_id: phone.id });
+      .returning(["id", "user_id", "text", "created"])
+      .insert({ id: uuid(), text: Body, user_id: user.id });
 
     log = log[0];
 
@@ -57,6 +53,7 @@ async function sendMessage(msg, number) {
       to: number
     })
     .then(message => {
+      console.log({ message });
       return message;
     })
     .catch(e => {

@@ -1,4 +1,5 @@
 module.exports = {
   twilio: require("./twilio"),
-  logs: require("./logs")
+  logs: require("./logs"),
+  users: require("./users")
 };
