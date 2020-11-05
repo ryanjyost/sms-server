@@ -42,8 +42,36 @@ async function smsReply(req, res) {
   }
 }
 
+async function verify(req, res) {
+  client.verify
+    .services(process.env.TwilioVerifySid)
+    .verifications.create({ to: req.body.phone, channel: "sms" })
+    .then(verification => {
+      console.log({ verification });
+      res.json({ status: verification.status });
+    })
+    .catch(e => res.json({ status: "error" }));
+}
+
+async function confirm(req, res) {
+  client.verify
+    .services(process.env.TwilioVerifySid)
+    .verificationChecks.create({ to: req.body.phone, code: req.body.code })
+    .then(async verificationCheck => {
+      console.log({ verificationCheck });
+      await db
+        .knex("users")
+        .where({ id: req.body.user })
+        .update({ phone: verificationCheck.to });
+      res.json({ status: verificationCheck.status });
+    })
+    .catch(e => res.status(500).json({ status: "error", e }));
+}
+
 module.exports = {
-  smsReply
+  smsReply,
+  verify,
+  confirm
 };
 
 async function sendMessage(msg, number) {

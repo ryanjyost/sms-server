@@ -24,15 +24,12 @@ async function create(req, res) {
 
 async function fetch(req, res) {
   const { query } = req;
-  console.log({ query });
 
   const user = await db
     .knex("users")
     .select("*")
     .where(query)
     .first();
-
-  console.log({ user });
 
   res.status(200).json({ user });
 }

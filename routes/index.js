@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const Handlers = require("../handlers");
 
 router.get("/", function(req, res) {
@@ -7,6 +9,8 @@ router.get("/", function(req, res) {
 });
 
 router.post("/sms/reply", Handlers.twilio.smsReply);
+router.post("/verify", Handlers.twilio.verify);
+router.post("/confirm", Handlers.twilio.confirm);
 
 router.get("/logs", Handlers.logs.list);
 router.post("/logs", Handlers.logs.create);
@@ -15,13 +19,3 @@ router.post("/users", Handlers.users.create);
 router.get("/users", Handlers.users.fetch);
 
 module.exports = router;
-
-// router.post("/verify", function(req, res) {
-//   client.verify
-//     .services(process.env.TwilioVerifySid)
-//     .verifications.create({ to: req.body.phone, channel: "sms" })
-//     .then(verification => {
-//       res.json({ status: "OK" });
-//     })
-//     .catch(e => res.json({ status: "error" }));
-// });

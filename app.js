@@ -1,19 +1,27 @@
 const createError = require("http-errors");
 const express = require("express");
+const bodyParser = require("body-parser");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const multer = require("multer");
+const fileUpload = require("express-fileupload");
+const upload = multer();
 require("dotenv").config();
 
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set("view engine", "jade");
 app.use(cors());
+app.use(fileUpload());
+app.use(express.urlencoded());
 
 app.use("/", require("./routes"));
 
@@ -30,6 +38,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
+  console.error(err);
   res.json({ status: "error" });
 });
 
