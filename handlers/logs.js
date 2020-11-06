@@ -12,21 +12,29 @@ const s3 = new aws.S3();
 
 async function list(req, res) {
   const { query } = req;
+  const { limit = -1, page = 1, userId } = query;
 
   const user = await db
     .knex("users")
     .select("*")
-    .where(query)
+    .where({ id: userId })
     .first();
 
   if (!user) {
     return res.status(401).json({ error: "User not found" });
   }
 
+  // const logsCount = await db
+  //   .knex("logs")
+  //   .where({ user_id: user.id })
+  //   .count();
+
   const logs = await db
     .knex("logs")
     .select("*")
     .where({ user_id: user.id })
+    .limit(limit)
+    .offset((page - 1) * limit)
     .orderBy("created", "desc");
 
   const logsWithAttachmentUrls = logs.map(log => {
